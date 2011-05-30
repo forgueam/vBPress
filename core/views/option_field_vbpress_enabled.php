@@ -1,0 +1,3 @@
+<input type="radio" name="vbpress_options[vbpress_enabled]" value="1" id="vbpress_enabled_yes" <?php echo !empty( $options['vbpress_enabled'] ) ? 'checked="checked"' : ''; ?> /> <?php _e( 'Yes', 'vbpress' ); ?>&nbsp;&nbsp;
+<input type="radio" name="vbpress_options[vbpress_enabled]" value="0" id="vbpress_enabled_no" <?php echo empty( $options['vbpress_enabled'] ) ? 'checked="checked"' : ''; ?> /> <?php _e( 'No', 'vbpress' ); ?><br />
+<?php _e( 'Enable vBPress integration.', 'vbpress' ); ?>

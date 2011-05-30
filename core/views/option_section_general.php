@@ -1,0 +1,1 @@
+<p><?php _e( 'General settings for vBPress', 'vbpress' ); ?></p>
