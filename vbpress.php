@@ -12,6 +12,8 @@
  */
 
 class Vbpress {
+
+	var $options = array();
 	
 	/**
 	 * Singleton
@@ -59,6 +61,63 @@ class Vbpress {
 	}
 }
 
+/**
+ * This is our "API" for vBulletin. All interaction with the vBulletin core
+ * should be handled through this class.
+ */
+class Vbpress_Vb {
+	
+	/**
+	 * Singleton
+	 */
+	function &init() {
+		static $instance = false;
+
+		if ( !$instance ) {
+			load_plugin_textdomain( 'vbpress', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+			$instance = new Vbpress_Vb;
+		}
+
+		return $instance;
+	}
+
+	/**
+	 * Constructor. Initializes WordPress hooks
+	 */
+	function Vbpress_Vb() {
+	
+		$this->options = get_option( 'vbpress_options' );
+		if ( isset( $GLOBALS['vbulletin'] ) ) {
+			$this->vbulletin = $GLOBALS['vbulletin'];
+		}
+		
+	}
+	
+	/**
+	 * If available, returns an array of user info for the currently
+	 * logged-in user
+	 */
+	function get_current_user_info() {
+		if ( !empty($this->vbulletin->userinfo['userid']) ) {
+			return $this->vbulletin->userinfo;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * If available, returns an array of user info for the specified
+	 * user ID
+	 */
+	function get_user_info( $user_id ) {
+		return fetch_userinfo($user_id);
+	}
+	
+}
+
+/**
+ * Manages the vBPress settings
+ */
 class Vbpress_Settings {
 
 	/**
@@ -91,6 +150,16 @@ class Vbpress_Settings {
 	 * vBPress settings page
 	 */
 	function settings() {
+	
+		$is_logged_in = false;
+		$vb_user_info = array();
+	
+		$options = get_option( 'vbpress_options' );
+		if ( !empty( $options['vbpress_enabled'] ) ) {
+			$vbpress_vb = Vbpress_Vb::init();
+			$current_user_info = $vbpress_vb->get_current_user_info();
+		}
+		
 		// TODO: Could we create 'View' class that is used for loading action views?
 		require( dirname( __FILE__ ) . '/core/views/settings.php' );
 	}
@@ -126,10 +195,44 @@ class Vbpress_Settings {
 	}
 }
 
-class Vbpress_Error extends WP_Error {}
-
 register_activation_hook( __FILE__, array( 'Vbpress', 'plugin_activation' ) );
 register_deactivation_hook( __FILE__, array( 'Vbpress', 'plugin_deactivation' ) );
 
 add_action( 'init', array( 'Vbpress', 'init' ) );
 add_action( 'admin_init', array( 'Vbpress_Settings', 'init' ) );
+
+
+/*
+ * Is vBPress enabled? If so, we need to load the vBulletin core
+ */
+$vBPressOptions = get_option( 'vbpress_options' );
+if ( !empty( $vBPressOptions['vbpress_enabled'] ) && !empty( $vBPressOptions['vbulletin_path'] ) ) {
+
+	if (file_exists($vBPressOptions['vbulletin_path'].'/global.php')) {
+
+		// vBulletin modifies request-related superglobals. Make a back up of them so
+		// that we can reset them after vBulletin has been loaded.
+		$request_superglobals = array(
+			'_GET' => $_GET,
+			'_POST' => $_POST,
+			'_REQUEST' => $_REQUEST
+		);
+
+		// Load the vBulletin core
+		$dir = getcwd();
+		chdir( $vBPressOptions['vbulletin_path'] );
+		require_once( './global.php' );
+		chdir( $dir );
+		
+		// Reset request-related superglobals
+		$_GET = $request_superglobals['_GET'];
+		$_POST = $request_superglobals['_POST'];
+		$_REQUEST = $request_superglobals['_REQUEST'];
+		
+		// Load the Vbpress_Vb class
+		add_action( 'init', array( 'Vbpress_Vb', 'init' ) );
+		
+	} else {
+		// TODO: Error, could not find the vBulletin global.php at this path $vBPressOptions['vbulletin_path']
+	}
+}
