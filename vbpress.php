@@ -5,7 +5,7 @@
  * Plugin URI: http://www.vbpress.com
  * Description: vBPress seamlessly integrates WordPress with vBulletin
  * Author: Aaron Forgue, PJ Hile
- * Version: 0.1
+ * Version: 0.2
  * Author URI: http://www.vbpress.com
  * Text Domain: vbpress
  * Domain Path: /languages/

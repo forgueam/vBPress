@@ -20,7 +20,7 @@ vBPress seamlessly integrates WordPress with vBulletin
 
 = There's not much, what's going on? =
 
-It's version 0.3. Patience.
+It's version 0.2. Patience.
 
 == Changelog ==
 
