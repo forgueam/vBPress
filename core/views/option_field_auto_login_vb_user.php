@@ -1,0 +1,3 @@
+<input type="radio" name="vbpress_options[auto_login_vb_user]" value="1" id="auto_login_vb_user_yes" <?php echo !empty( $options['auto_login_vb_user'] ) ? 'checked="checked"' : ''; ?> /> <?php _e( 'Yes', 'vbpress' ); ?>&nbsp;&nbsp;
+<input type="radio" name="vbpress_options[auto_login_vb_user]" value="0" id="auto_login_vb_user_no" <?php echo empty( $options['auto_login_vb_user'] ) ? 'checked="checked"' : ''; ?> /> <?php _e( 'No', 'vbpress' ); ?><br />
+<?php _e( 'When a user logs in to WordPress, automatically log them into vBulletin as well.', 'vbpress' ); ?>

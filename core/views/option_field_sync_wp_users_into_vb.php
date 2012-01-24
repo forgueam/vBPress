@@ -1,0 +1,3 @@
+<input type="radio" name="vbpress_options[sync_wp_users_into_vb]" value="1" id="sync_wp_users_into_vb_yes" <?php echo !empty( $options['sync_wp_users_into_vb'] ) ? 'checked="checked"' : ''; ?> /> <?php _e( 'Yes', 'vbpress' ); ?>&nbsp;&nbsp;
+<input type="radio" name="vbpress_options[sync_wp_users_into_vb]" value="0" id="sync_wp_users_into_vb_no" <?php echo empty( $options['sync_wp_users_into_vb'] ) ? 'checked="checked"' : ''; ?> /> <?php _e( 'No', 'vbpress' ); ?><br />
+<?php _e( 'When a user account is created in WordPress, it will also be created in vBulletin.', 'vbpress' ); ?>

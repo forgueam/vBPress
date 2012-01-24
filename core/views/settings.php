@@ -6,7 +6,7 @@
 		<input name="Submit" type="submit" value="<?php _e( 'Save Settings', 'vbpress' ); ?>" />
 	</form>
 	
-	<?php if ( !empty( $options['vbpress_enabled'] ) ) { ?>
+	<?php if ( false && !empty( $options['vbpress_enabled'] ) ) { ?>
 		<h2><?php _e( 'vBulletin Status', 'vbpress' ); ?></h2>
 		<?php if ( !empty( $current_user_info ) ) { ?>
 			You are currently logged into vBulletin as "<strong><?php echo $current_user_info['username']; ?></strong>".
