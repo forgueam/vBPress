@@ -2,16 +2,14 @@
 Contributors: forgueam, pjhile
 Tags: vbulletin, integrate, forum, bridge, vb, login, merge, member, user, thread, post, comment
 Requires at least: 3.0.5
-Tested up to: 3.1.4
-Stable tag: 0.1.0-2
+Tested up to: 3.3.1
+Stable tag: 0.2
 
 vBPress seamlessly integrates WordPress with vBulletin
 
 == Description ==
 
 [vBPress](http://www.vbpress.com/) is a WordPress plugin that seamlessly integrates WordPress with vBulletin.
-
-PLEASE NOTE: This plugin is still under active development and is not yet fully functional. Set your expectations accordingly.
 
 == Installation ==
 
@@ -22,9 +20,13 @@ PLEASE NOTE: This plugin is still under active development and is not yet fully 
 
 = There's not much, what's going on? =
 
-It's version 0.1.0. Patience.
+It's version 0.3. Patience.
 
 == Changelog ==
+
+= 0.2 =
+* Added setting to create vBulletin user account when a WordPress user account is created
+* Added setting to enable auto-login
 
 = 0.1.0-2 =
 * Now actually loads the vBulletin core when enabled and a valid path is provided. Created the Vbpress_Vb class for interaction with vB core
